@@ -4,21 +4,26 @@
     <title>Table V04</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
-    <link rel="script" href="jquery/jquery-3.2.1.min.js">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="animate/animate.css">
-    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?lang=en_US" type="text/javascript"></script>
+    <script type="text/javascript">
+        ymaps.ready(init);
+        var myMap;
+
+        function init(){
+            myMap = new ymaps.Map("map", {
+                center: [55.76, 37.64],
+                zoom: 7
+            });
+        }
+    </script>
+
     <script src="script.js"></script>
-    <!--===============================================================================================-->
 </head>
 <body>
 
@@ -26,9 +31,9 @@
 
 <div class="container">
     <ul class="inside">
-        <li id="lic">Licenses</li>
-        <li id = "map">Map</li>
-        <li id="ord">Orders</li>
+        <li id="lilic">Licenses</li>
+        <li id = "limap">Map</li>
+        <li id="liord">Orders</li>
     </ul>
 </div>
 
@@ -214,8 +219,188 @@
 </div>
 
 
-<div class="map">The map will be here</div>
-<div class="order">The orders will be here</div>
+<div id="map"></div>
+<div class="order">
+    <table>
+        <thead>
+        <tr class="table-title">
+            <th>Order ID</th>
+            <th>Route</th>
+            <th>Type</th>
+            <th>Begin</th>
+            <th class=>End</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+        <tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr><tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr><tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr><tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr><tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr><tr>
+            <td>23AG60012554Q11</td>
+            <td>Moscow - St.Peterburg</td>
+            <td>Tank</td>
+            <td>02.01.2019</td>
+            <td>03.05.2034</td>
+        </tr>
+
+        <tr>
+            <td>11QZ1288R2D312</td>
+            <td>Torzhok - Tver</td>
+            <td>Military vehicles</td>
+            <td>01.01.2020</td>
+            <td>02.02.2030</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
 
 <div class="subsc">Powered by SkolTech IW Team#3</div>
 
