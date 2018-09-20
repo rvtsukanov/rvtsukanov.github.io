@@ -1,6 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 @import url('https://fonts.googleapis.com/css?family=Dancing+Script');
 @import url('https://fonts.googleapis.com/css?family=Coda|Dancing+Script|Lalezar');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 
 body {
   background-color: #ffffff;
@@ -17,7 +19,7 @@ span{
 }
 
 .container{
-  text-decoration: none;
+  font-family: 'Montserrat', sans-serif;
   padding: 10px;
   font-size: 30pt;
   text-align: center;
@@ -26,19 +28,26 @@ span{
 }
 
 #map{
+  margin: 5%;
+  margin-top: 0;
+  margin-bottom: 0;
   justify-content: center;
   display: none;
-  width: 100%;
+  border: solid black 1px;
+  width: 90%;
   height: 68vh;
   overflow: auto;
 }
 
 
 .order{
+  margin: 5%;
+  margin-top: 0;
+  margin-bottom: 0;
   justify-content: center;
-  background-color: red;
+  border: solid black 1px;
   display: none;
-  width: 100%;
+  width: 90%;
   height: 68vh;
   overflow: auto;
 }
@@ -54,8 +63,12 @@ div.shapka{
 }
 
 div.main-table {
+  margin: 5%;
+  margin-top: 0;
+  margin-bottom: 0;
+  border: solid black 1px;
   display: flex;
-  width: 100%;
+  width: 90%;
   height: 68vh;
   overflow: auto;
 }
@@ -66,28 +79,26 @@ div.main-table {
 
 }
 
-.ordinary {
-  color: white;
-}
-
-.active {
-  background-color: red;
-  color: black;
-}
-
 .inside li{
+  margin: 0;
   cursor: pointer;
   font-size: 30pt;
   text-align: center;
-  font-family: Lalezar, cursive;
+  font-family: 'Montserrat', sans-serif;
   color: white;
   border-radius: 5px;
   width: 400px;
   height: 25px;
-  background-color: #b0bfcb;
+  background-color: rgba(0, 0, 0, 0.33);
   padding: 10px;
   display: inline;
   align-items: center;
+
+}
+
+#lilic{
+  padding-top: +4px;
+
 
 }
 
@@ -120,7 +131,6 @@ div.table-title {
 
 table{
   padding: 2%;
-  border: solid black 1px;
 }
 
 /*** Table Styles **/
@@ -140,13 +150,14 @@ table{
 
 th {
   width: 1%;
+  height: 1px;
   color:#D5DDE5;;
   background:#1b1e24;
   border-bottom:4px solid #9ea7af;
   border-right: 1px solid #343a45;
-  font-size:23px;
+  font-size:20px;
   font-weight: 100;
-  padding:12px;
+  padding:0px;
   text-align:left;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   vertical-align:middle;

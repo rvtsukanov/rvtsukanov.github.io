@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Table V04</title>
+    <title>CargoCult - organize your transportation!</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css">
@@ -11,23 +11,14 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://api-maps.yandex.ru/2.1/?lang=en_US" type="text/javascript"></script>
-    <script type="text/javascript">
-        ymaps.ready(init);
-        var myMap;
-
-        function init(){
-            myMap = new ymaps.Map("map", {
-                center: [55.76, 37.64],
-                zoom: 7
-            });
-        }
-    </script>
 
     <script src="script.js"></script>
 </head>
 <body>
 
+
 <div class="shapka"><span>Cargo</span>cult</div>
+<input id="field" type="text" style="width: 90%; margin-left: 5%; height: 40px">
 
 <div class="container">
     <ul class="inside">
