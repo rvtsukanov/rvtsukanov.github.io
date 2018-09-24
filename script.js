@@ -11,10 +11,10 @@ $(document).ready(function(){
 
 
     function init() {
-        console.log(frame.list_of_lics[0]);
+
         // Объявляем набор опорных точек и массив индексов транзитных точек.
-        var referencePoints = frame.list_of_lics[0]
-            // viaIndexes = [2];
+        var referencePoints = frame.list_of_lics[0],
+            viaIndexes = [2];
 
         // Создаем мультимаршрут и настраиваем его внешний вид с помощью опций.
         var multiRoute = new ymaps.multiRouter.MultiRoute({
@@ -70,6 +70,48 @@ $(document).ready(function(){
         // Добавляем мультимаршрут на карту.
         myMap.geoObjects.add(multiRoute);
     }
+
+    function init2() {
+
+
+
+
+
+        var myMap = new ymaps.Map('map', {
+            center: [55.739625, 37.54120],
+            zoom: 0
+        });
+
+        for(var i=0; i<frame.list_of_lics.length; i++) {
+
+            ymaps.route(frame.list_of_lics[i], {
+                mapStateAutoApply: true
+            }).then(function (route) {
+                route.getPaths().options.set({
+                    // В балуне выводим только информацию о времени движения с учетом пробок.
+                    balloonContentLayout: ymaps.templateLayoutFactory.createClass('{{ properties.humanJamsTime }}'),
+                    // Можно выставить настройки графики маршруту.
+                    strokeColor: getRandomColor()
+                });
+                // добавляем маршрут на карту
+                myMap.geoObjects.add(route);
+            });
+        }
+
+        //
+        //     ymaps.route(frame.list_of_lics[i]).then(function (route) {
+        //         route.options.set("mapStateAutoApply", true);
+        //         console.log(route.options);
+        //         console.log('here');
+        //         myMap.geoObjects.add(route);
+        //     }, function (err) {
+        //         throw err;
+        //     }, this);
+        // }
+    }
+
+
+
 
 
 
@@ -137,13 +179,14 @@ $(document).ready(function(){
             console.log(frame.list_of_lics);
             var lic = new Licence(
             $('#input_id')[0].value,
-                $('#input_route')[0].value.split(' - '),
+            $('#input_route')[0].value.split(' - '),
             $('#input_type')[0].value,
             $('#input_exp')[0].value,
             $('#input_num')[0].value);
             $('#warn').remove();
             $('.context').hide();
             $('.wrapper').css('opacity', '1');
+            console.log($('#input_route'));
             $('#lic_body').append('<tr><td>' + lic.id + '</td><td>' + $('#input_route')[0].value.split(' - ')[0] + '-' + $('#input_route')[0].value.split(' - ')[$('#input_route').length + 1] + '</td><td>' + lic.type + '</td><td>' + lic.expire + '</td><td>' + lic.num + '</td></tr>');
             frame.list_of_lics.push(lic.route);
             delete lic;
@@ -227,7 +270,7 @@ $(document).ready(function(){
             $('#lilic').css('color', 'white');
             $('#limap').css('color', 'black');
             $('#liord').css('color', 'white');
-            init();
+            init2();
             ymaps.ready();
 
 
