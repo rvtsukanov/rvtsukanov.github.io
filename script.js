@@ -11,30 +11,21 @@ $(document).ready(function(){
 
 
     function init() {
+        console.log(frame.list_of_lics[0]);
         // Объявляем набор опорных точек и массив индексов транзитных точек.
-        var referencePoints = [
-                "Москва, Ленинский проспект",
-                "Москва, Льва Толстого, 16",
-                "Москва, Кремлевская набережная",
-                "Москва, парк Сокольники"
-            ],
-            viaIndexes = [2];
+        var referencePoints = frame.list_of_lics[0]
+            // viaIndexes = [2];
 
         // Создаем мультимаршрут и настраиваем его внешний вид с помощью опций.
         var multiRoute = new ymaps.multiRouter.MultiRoute({
             referencePoints: referencePoints,
-            params: {viaIndexes: viaIndexes},
+            // params: {viaIndexes: viaIndexes},
         }, {
             boundsAutoApply: true,
             // Внешний вид путевых точек.
             wayPointStartIconColor: "#333",
             wayPointStartIconFillColor: "#B3B3B3",
             // Задаем собственную картинку для последней путевой точки.
-            wayPointFinishIconImageSize: [30, 30],
-            wayPointFinishIconImageOffset: [-15, -15],
-            // Позволяет скрыть иконки путевых точек маршрута.
-            // wayPointVisible:false,
-
             // Внешний вид транзитных точек.
             viaPointIconRadius: 7,
             viaPointIconFillColor: "#000088",
@@ -73,7 +64,7 @@ $(document).ready(function(){
         // Создаем карту с добавленной на нее кнопкой.
         var myMap = new ymaps.Map('map', {
             center: [55.739625, 37.54120],
-            zoom: 7
+            zoom: 0
         });
 
         // Добавляем мультимаршрут на карту.
@@ -115,7 +106,6 @@ $(document).ready(function(){
 
     let frame = new main_frame();
     document.getElementById(frame.active_tab).style.color = 'black';
-    console.log(frame.active_tab);
 
 
     $('#lilic').css('color', 'black');
@@ -144,13 +134,13 @@ $(document).ready(function(){
 
         $('#confirm').unbind().click(function ()
         {
+            console.log(frame.list_of_lics);
             var lic = new Licence(
             $('#input_id')[0].value,
                 $('#input_route')[0].value.split(' - '),
             $('#input_type')[0].value,
             $('#input_exp')[0].value,
             $('#input_num')[0].value);
-            console.log('VVV' + lic.route);
             $('#warn').remove();
             $('.context').hide();
             $('.wrapper').css('opacity', '1');
@@ -171,8 +161,6 @@ $(document).ready(function(){
         $(document).unbind().mouseup(function(e)
         {
             var container = $(".context");
-            console.log(e.target);
-
             // if the target of the click isn't the container nor a descendant of the container
             if (!container.is(e.target) && container.has(e.target).length === 0)
             {
@@ -239,8 +227,6 @@ $(document).ready(function(){
             $('#lilic').css('color', 'white');
             $('#limap').css('color', 'black');
             $('#liord').css('color', 'white');
-            console.log('!', frame.list_of_lics[1]);
-            console.log(frame.list_of_lics.length);
             init();
             ymaps.ready();
 
