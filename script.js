@@ -1,53 +1,107 @@
-ymaps.ready(init);
-var myMap;
-
-
-function init(){
-    myMap = new ymaps.Map("map", {
-        center: [55.76, 37.64],
-        zoom: 7
-    });
-}
-
-var http = new XMLHttpRequest();
-var parser = new DOMParser();
-var points = [];
-
-
-
-var added = 0;
-var send_request = function (msg) {
-    console.log('Sended: ', msg);
-    http.open('GET', ' https://geocode-maps.yandex.ru/1.x/?geocode=' + msg, false);
-    http.send(null);
-    // console.log(http.responseText);
-    xmlDoc = parser.parseFromString(http.responseText, 'text/xml');
-    console.log(xmlDoc.getElementsByTagName('pos')[0].textContent);
-    points.push(xmlDoc.getElementsByTagName('pos')[0].textContent);
-}
-
-var field = document.getElementById('field');
-console.log(field);
-
-field.oninput = function () {
-    console.log(field.value.split(' - '));
-    console.log(added);
-    var req = field.value.split(' - ');
-
-    if(req.length === 1) {added = 0; points = [];}
-    else if (added === req.length-2){send_request(req[req.length - 2]); added++};
-}
-field.onchange = function () {
-    var req = field.value.split(' - ');
-    if(req[req.length - 1] !== '') {
-        send_request(req[req.length - 1]);
-    }
-}
-
-
 $(document).ready(function(){
 
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
+    function init() {
+        // Объявляем набор опорных точек и массив индексов транзитных точек.
+        var referencePoints = [
+                "Москва, Ленинский проспект",
+                "Москва, Льва Толстого, 16",
+                "Москва, Кремлевская набережная",
+                "Москва, парк Сокольники"
+            ],
+            viaIndexes = [2];
+
+        // Создаем мультимаршрут и настраиваем его внешний вид с помощью опций.
+        var multiRoute = new ymaps.multiRouter.MultiRoute({
+            referencePoints: referencePoints,
+            params: {viaIndexes: viaIndexes},
+        }, {
+            boundsAutoApply: true,
+            // Внешний вид путевых точек.
+            wayPointStartIconColor: "#333",
+            wayPointStartIconFillColor: "#B3B3B3",
+            // Задаем собственную картинку для последней путевой точки.
+            wayPointFinishIconImageSize: [30, 30],
+            wayPointFinishIconImageOffset: [-15, -15],
+            // Позволяет скрыть иконки путевых точек маршрута.
+            // wayPointVisible:false,
+
+            // Внешний вид транзитных точек.
+            viaPointIconRadius: 7,
+            viaPointIconFillColor: "#000088",
+            viaPointActiveIconFillColor: "#E63E92",
+            // Транзитные точки можно перетаскивать, при этом
+            // маршрут будет перестраиваться.
+            viaPointDraggable: true,
+            // Позволяет скрыть иконки транзитных точек маршрута.
+            // viaPointVisible:false,
+
+            // Внешний вид точечных маркеров под путевыми точками.
+            pinIconFillColor: "#000088",
+            pinActiveIconFillColor: "#B3B3B3",
+            // Позволяет скрыть точечные маркеры путевых точек.
+            // pinVisible:false,
+
+            // Внешний вид линии маршрута.
+            routeStrokeWidth: 2,
+            routeStrokeColor: "#000088",
+            routeActiveStrokeWidth: 6,
+            routeActiveStrokeColor: "#E63E92",
+
+            // Внешний вид линии пешеходного маршрута.
+            routeActivePedestrianSegmentStrokeStyle: "solid",
+            routeActivePedestrianSegmentStrokeColor: "#00CDCD",
+
+            // Автоматически устанавливать границы карты так, чтобы маршрут был виден целиком.
+        });
+
+        // Настраиваем внешний вид второй точки через прямой доступ к ней.
+
+
+        // Создаем кнопки.
+
+
+        // Создаем карту с добавленной на нее кнопкой.
+        var myMap = new ymaps.Map('map', {
+            center: [55.739625, 37.54120],
+            zoom: 7
+        });
+
+        // Добавляем мультимаршрут на карту.
+        myMap.geoObjects.add(multiRoute);
+    }
+
+
+
+
+
+    class Licence {
+        constructor(id, route, type, expire, num) {
+            this.id = id;
+            this.route = route;
+            this.type = type;
+            this.expire = expire;
+            this.num = num;
+        }
+    }
+
+    var lic1 = new Licence('TP200X177', 'Moscow - St.Peterburg', 'Sand', '02.01.2019', 3);
+    var lic2 = new Licence('TP300X177', 'Tver - St.Peterburg', 'Turbo Engine', '30.03.2019', 4);
+    var is_open = false;
+
+
     function main_frame(){
+        // this.list_of_lics = [lic1, lic2];
+        this.list_of_lics = [];
         var content = document.getElementsByClassName('inside')[0].getElementsByTagName('*');
         var list_of_content = [];
 
@@ -61,45 +115,147 @@ $(document).ready(function(){
 
     let frame = new main_frame();
     document.getElementById(frame.active_tab).style.color = 'black';
+    console.log(frame.active_tab);
 
 
-    $('.container li').hover(function(){
-        $(this).css('color', 'black');
-    }, function(){
-        if(this.id !== frame.active_tab) {
-            $(this).css('color', 'white');
+    $('#lilic').css('color', 'black');
+    var chosen = 'lic';
+    $(document).mousemove(function (e) {
+        var x = e.pageX;
+        var y = e.pageY;
+
+        $('ul div').hover(function () {
+                $(this).css('color', 'grey');
+            },
+            function () {
+                $(this).css('color', 'black');
+            })
+
+        $('.add').hover(function () {
+                $(this).css('opacity', 0.5);
+            },
+            function () {
+                $(this).css('opacity', 0.3);
+            })
+
+
+
+        //Creating lics manually
+
+        $('#confirm').unbind().click(function ()
+        {
+            var lic = new Licence(
+            $('#input_id')[0].value,
+                $('#input_route')[0].value.split(' - '),
+            $('#input_type')[0].value,
+            $('#input_exp')[0].value,
+            $('#input_num')[0].value);
+            console.log('VVV' + lic.route);
+            $('#warn').remove();
+            $('.context').hide();
+            $('.wrapper').css('opacity', '1');
+            $('#lic_body').append('<tr><td>' + lic.id + '</td><td>' + $('#input_route')[0].value.split(' - ')[0] + '-' + $('#input_route')[0].value.split(' - ')[$('#input_route').length + 1] + '</td><td>' + lic.type + '</td><td>' + lic.expire + '</td><td>' + lic.num + '</td></tr>');
+            frame.list_of_lics.push(lic.route);
+            delete lic;
+            $('#input_id')[0].value = '';
+            $('#input_route')[0].value = '';
+            $('#input_type')[0].value = '';
+            $('#input_exp')[0].value = '';
+            $('#input_num')[0].value = '';
+
+
+        });
+
+
+
+        $(document).unbind().mouseup(function(e)
+        {
+            var container = $(".context");
+            console.log(e.target);
+
+            // if the target of the click isn't the container nor a descendant of the container
+            if (!container.is(e.target) && container.has(e.target).length === 0)
+            {
+                container.hide();
+                $('.wrapper').animate({opacity: 1}, 100);
+            }
+        });
+
+
+
+
+        if($('#lic_body').children().length === 0) {
+            $('.main-table').css('display', 'block');
+            $('.main-table').css('text-align', 'center');
+            $('.main-table').append('<p id="warn">There are not any licenses. Add one?<p>');
         }
-    });
 
 
-    $('#lilic').click(function() {
-        frame.active_tab = 'lilic';
-        $('div.main-table').css('display', 'flex');
-        $('#map').css('display', 'none');
-        $('div.order').css('display', 'none');
-        $('#lilic').css('color', 'black');
-        $('#limap').css('color', 'white');
-        $('#liord').css('color', 'white');
-    });
+        $('table').unbind().click(function () {
+            $('.main-table').hide();
+            $('#map').show();
+            $("#limap").css('color', 'black');
+            $("#lilic").css('color', 'white');
+        })
 
-    $('#limap').click(function() {
-        frame.active_tab = 'limap';
-        $('div.main-table').css('display', 'none');
-        $('#map').css('display', 'flex');
-        $('div.order').css('display', 'none');
-        $('#lilic').css('color', 'white');
-        $('#limap').css('color', 'black');
-        $('#liord').css('color', 'white');
-    });
+        $('.shapka').unbind().mousedown(function () {
+                $('.context').hide(10);
+            $('table').append('<tr style="color: orange; opacity: 0.8"><td>ME345A199</td><td>Reutov - Chelyabinsk</td><td>Rise</td><td>03.04.2019</td><td>0</td></tr>');
+            return false;
+        })
 
-    $('#liord').click(function() {
-        frame.active_tab = 'liord';
-        $('div.main-table').css('display', 'none');
-        $('#map').css('display', 'none');
-        $('div.order').css('display', 'flex');
-        $('#lilic').css('color', 'white');
-        $('#limap').css('color', 'white');
-        $('#liord').css('color', 'black');
-    });
+
+
+
+        $('.add').unbind().click(function () {
+            $('.wrapper').animate({opacity: 0.05}, 100);
+            $('.context').show(500);
+        })
+
+        $('.container li').hover(function(){
+            $(this).css('color', 'black');
+        }, function(){
+            if(this.id !== frame.active_tab) {
+                $(this).css('color', 'white');
+            }
+        });
+
+
+        $('#lilic').click(function() {
+            frame.active_tab = 'lilic';
+            $('div.main-table').css('display', 'flex');
+            $('#map').css('display', 'none');
+            $('div.order').css('display', 'none');
+            $('#lilic').css('color', 'black');
+            $('#limap').css('color', 'white');
+            $('#liord').css('color', 'white');
+        });
+
+        $('#limap').unbind().click(function() {
+            frame.active_tab = 'limap';
+            $('div.main-table').css('display', 'none');
+            $('#map').css('display', 'flex');
+            $('div.order').css('display', 'none');
+            $('#lilic').css('color', 'white');
+            $('#limap').css('color', 'black');
+            $('#liord').css('color', 'white');
+            console.log('!', frame.list_of_lics[1]);
+            console.log(frame.list_of_lics.length);
+            init();
+            ymaps.ready();
+
+
+        });
+
+        $('#liord').click(function() {
+            frame.active_tab = 'liord';
+            $('div.main-table').css('display', 'none');
+            $('#map').css('display', 'none');
+            $('div.order').css('display', 'flex');
+            $('#lilic').css('color', 'white');
+            $('#limap').css('color', 'white');
+            $('#liord').css('color', 'black');
+        });
+    })
 
 });
